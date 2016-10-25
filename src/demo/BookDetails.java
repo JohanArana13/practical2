@@ -86,5 +86,7 @@ public class BookDetails {
         public void setInventory(int inventory) {
                 this.inventory = inventory;
         }
+
+
 }
 

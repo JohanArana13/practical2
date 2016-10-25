@@ -20,21 +20,31 @@ public class BookCatalogServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest resquest, HttpServletResponse response) throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
+        out.println("<html>" + "<head><title>Duke's Bookstore</title></head>" +
+                "<body  bgcolor=\"#ffffff\">" + "<center>" +
+                "<hr> <br> &nbsp;" + "<h1>" +
+                "<font size=\"+3\" color=\"#CC0066\">Duke's </font> <img src=\"" +
+                "./duke.books.gif\" alt=\"Duke holding books\"\">" +
+                "<font size=\"+3\" color=\"black\">Bookstore</font>" + "</h1>" +
+                "</center>" + "<br> &nbsp; <hr> <br> ");
+
         try {
             BookDBAO db = new BookDBAO();
             List<BookDetails> list = db.getAllBooks();
-            PrintWriter out = response.getWriter();
-            out.println("<html>");
-            out.println("<body>");
-            out.println("<table");
+            out.println("<h3>Please choose from our selections:</h3>");
+            out.println("<table align=\"center\">");
             for (int i = 0; i < list.size(); i++) {
                 out.println("<tr>");
-                out.println("<td>" + list.get(i).getTitle() + "</td>");
-                out.println("<td>" + list.get(i).getDescription() + "</td>");
-                out.println("<td>" + list.get(i).getYear() + "</td>");
+                out.println("<td bgcolor=\"yellow\"><a href=\"\">" + list.get(i).getTitle() + "</a></td>");
+                out.println("<td rowspan=\"2\" bgcolor=\"yellow\">" + list.get(i).getPrice() + "</td>");
+                out.println("<td rowspan=\"2\" bgcolor=\"yellow\"><a href=\"\">" + "Add to Cart" + "</a></td>");
+                out.println("</tr>");
+                out.println("<tr>");
+                out.println("<td>" + "by " + "<i>" + list.get(i).getFirstName() + " " + list.get(i).getSurname() + "</i></td>");
                 out.println("</tr>");
             }
-            out.println("</table");
+            out.println("</table>");
             out.println("</body>");
             out.println("</html>");
         } catch (Exception e) {
